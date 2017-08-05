@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F429xx</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\OBJ;..\USER;..\HALLIB\STM32F4xx_HAL_Driver\Inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\HARDWARE\LED</IncludePath>
+              <IncludePath>..\CORE;..\OBJ;..\USER;..\HALLIB\STM32F4xx_HAL_Driver\Inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\HARDWARE\LED;..\HARDWARE\KEY;..\HARDWARE\LED;..\HARDWARE\TIMER;..\FUNCTION\stepper</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -773,6 +773,46 @@
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\SYSTEM\usart\usart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>HARDWARE</GroupName>
+          <Files>
+            <File>
+              <FileName>key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\KEY\key.c</FilePath>
+            </File>
+            <File>
+              <FileName>led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\LED\led.c</FilePath>
+            </File>
+            <File>
+              <FileName>timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\TIMER\timer.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>FUNCTION</GroupName>
+          <Files>
+            <File>
+              <FileName>stepper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FUNCTION\stepper\stepper.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>README</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\readme.txt</FilePath>
             </File>
           </Files>
         </Group>

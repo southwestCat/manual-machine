@@ -1,52 +1,58 @@
 #include "sys.h"
 #include "delay.h"
 #include "usart.h"
+#include "led.h"
+#include "stepper.h"
 
-/************************************************
- ALIENTEK 阿波罗STM32F429开发板实验0-1
- Template工程模板-新建工程章节使用-HAL库版本
- 技术支持：www.openedv.com
- 淘宝店铺： http://eboard.taobao.com 
- 关注微信公众平台微信号："正点原子"，免费获取STM32资料。
- 广州市星翼电子科技有限公司  
- 作者：正点原子 @ALIENTEK
-************************************************/
-
-
-/***注意：本工程和教程中的新建工程3.3小节对应***/
-
-
-void Delay(__IO uint32_t nCount);
-
-void Delay(__IO uint32_t nCount)
-{
-  while(nCount--){}
-}
+u8 stepper_direction;
+u8 stepper_speed;
+u8 stepper_speed_mode;
+u32 stepper_steps;
 
 int main(void)
 {
-
-	GPIO_InitTypeDef GPIO_Initure;
-     
-    HAL_Init();                     //初始化HAL库    
-    Stm32_Clock_Init(360,25,2,8);   //设置时钟,180Mhz
-
-    __HAL_RCC_GPIOB_CLK_ENABLE();           //开启GPIOB时钟
+	int i;
+	int state;
 	
-    GPIO_Initure.Pin=GPIO_PIN_0|GPIO_PIN_1; //PB1,0
-    GPIO_Initure.Mode=GPIO_MODE_OUTPUT_PP;  //推挽输出
-    GPIO_Initure.Pull=GPIO_PULLUP;          //上拉
-    GPIO_Initure.Speed=GPIO_SPEED_HIGH;     //高速
-    HAL_GPIO_Init(GPIOB,&GPIO_Initure);
-
+	HAL_Init();                     //初始化HAL库    
+	Stm32_Clock_Init(360,25,2,8);   //设置时钟,180Mhz
+	delay_init(180);
+	uart_init(115200);
+	GPIO_init();
+	
+	stepper_direction=STEPPER_CLOCKWISE;
+	stepper_speed=SPEED_LEVEL_0;
+	stepper_speed_mode=STEPPER_SPEED_LOW;
+	stepper_direction_set(stepper_direction);
+	stepper_speed_set(stepper_speed, stepper_speed_mode);
 	while(1)
 	{
-		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_SET);	//PB1置1 
-		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_1,GPIO_PIN_SET);	//PB0置1  			
-		Delay(0x7FFFFF);
-		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_RESET);	//PB1置0
-		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_1,GPIO_PIN_RESET);	//PB0置0  
-		Delay(0x7FFFFF);
+		if(USART_RX_STA&0x8000)
+		{
+			USART_RX_BUF[USART_RX_STA&0x3FFF]=0;
+			if  ((USART_RX_BUF[0]=='F')&&(USART_RX_BUF[1]=='F'))
+			{
+				stepper_direction=(USART_RX_BUF[2]-'0')*10+(USART_RX_BUF[3]-'0');
+				stepper_speed_mode=(USART_RX_BUF[4]-'0')*10+(USART_RX_BUF[5]-'0');
+				stepper_speed=(USART_RX_BUF[6]-'0')*10+(USART_RX_BUF[7]-'0');
+				
+			}
+			USART_RX_STA=0;
+			state=0;
+		}
+		switch(state)
+		{
+			case 0:
+				stepper_direction_set(stepper_direction);
+				stepper_speed_set(stepper_speed, stepper_speed_mode);
+				state=1;
+			break;
+			case 1:
+			
+			break;
+			default:
+				
+			break;
+		}
 	}
-	}
-
+}
