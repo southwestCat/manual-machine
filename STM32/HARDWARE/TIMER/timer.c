@@ -1,5 +1,6 @@
 #include "timer.h"
 #include "led.h"
+#include "stepper.h"
 //////////////////////////////////////////////////////////////////////////////////	 
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途
 //ALIENTEK STM32F429开发板
@@ -61,7 +62,19 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if(htim==(&TIM3_Handler))
     {
-//        LED1=!LED1;        //LED1反转
-		HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_1);
+		if(stepper_steps==0)
+		{
+			steps_flag=STEPS_FLAG_OFF;
+		}
+		if(steps_flag==STEPS_FLAG_CNT)
+		{
+			HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_1);
+			stepper_steps--;
+		}
+		if(steps_flag==STEPS_FLAG_ON)
+		{
+	//        LED1=!LED1;        //LED1反转
+			HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_1);
+		}
     }
 }

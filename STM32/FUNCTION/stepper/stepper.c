@@ -6,6 +6,9 @@
            高速共10个档+停止
 		   低速共 3个档+停止
 ***************************************/
+
+u8 steps_flag=0;
+
 void stepper_speed_set(u8 speed, u8 mode)
 {
 	u16 arr,psc;
@@ -125,5 +128,14 @@ void stepper_direction_set(u8 direction)
 
 void stepper_steps_set(u32 steps)
 {
-	
+	if(steps_flag==STEPS_FLAG_OFF)
+	{
+		stepper_steps=steps*2;
+		steps_flag=STEPS_FLAG_CNT;
+	}
+}
+
+u32 angle2steps(float angle)
+{
+	return angle/0.9*16.0;
 }

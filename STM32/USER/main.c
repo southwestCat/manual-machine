@@ -45,10 +45,11 @@ int main(void)
 			case 0:
 				stepper_direction_set(stepper_direction);
 				stepper_speed_set(stepper_speed, stepper_speed_mode);
+				stepper_steps_set(angle2steps(360));
 				state=1;
 			break;
 			case 1:
-			
+				
 			break;
 			default:
 				

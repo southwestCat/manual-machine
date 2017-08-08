@@ -73,3 +73,4 @@
 ..\obj\timer.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h
 ..\obj\timer.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_hcd.h
 ..\obj\timer.o: ..\HARDWARE\LED\led.h
+..\obj\timer.o: ..\FUNCTION\stepper\stepper.h
