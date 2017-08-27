@@ -30,7 +30,7 @@ extern u8 stepper_speed;
 extern u32 stepper_steps;
 extern u8 steps_flag;
 
-void stepper_speed_set_h(u8 speed, u8 mode);
+void stepper_speed_set(u8 speed, u8 mode);
 void stepper_direction_set(u8 direction);
 void stepper_steps_set(u32 steps);
 u32 angle2steps(float angle);
